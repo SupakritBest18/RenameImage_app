@@ -6,12 +6,15 @@ import re
 app = Flask(__name__)
 UPLOAD_FOLDER = "static/uploads"
 BASE_URL = "https://assets.central.co.th/{}?$JPG$"
-pattern_remove_cds = r'^CDS' # pattern Remove CDS
+pattern_remove_cds = r"^CDS"  # Pattern to remove 'CDS' from filenames
 
+# Create upload folder if not exists
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+# Home route ("/") to render index.html
 @app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])  # Add route for /index
 def upload_file():
     if request.method == "POST":
         excel_file = request.files["excel_file"]
@@ -41,15 +44,11 @@ def upload_file():
                 file_name_without_ext, _ = os.path.splitext(new_filename)
 
                 new_file_path = os.path.join(UPLOAD_FOLDER, new_filename)
-                
                 file.save(new_file_path)  # Save with new name
-                
-                
 
                 # Generate image URL
                 image_url = BASE_URL.format(new_filename)
-                #image_urls.append([new_filename, image_url])
-                image_urls.append([file_name_without_ext,image_url])
+                image_urls.append([file_name_without_ext, image_url])
             else:
                 file.save(os.path.join(UPLOAD_FOLDER, filename))  # Save unchanged
                 image_urls.append([filename, "No new name found"])
