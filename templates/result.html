@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Renaming Results</title>
+</head>
+<body>
+    <h1>Renaming Results</h1>
+    <ul>
+        {% for result in results %}
+        <li>{{ result }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Renamer</a>
+    <br>
+    <a href="{{ download_url }}">Download URLs Excel</a>
+</body>
+</html>
